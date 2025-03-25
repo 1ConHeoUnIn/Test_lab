@@ -1,31 +1,36 @@
 import cv2
 import pytesseract
+
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
-image_path = r'D:\Test_Lab\Open_cv\photos\sample1.jpg'
+
+# Đường dẫn đến hình ảnh
+image_path = r'D:\Test_Lab\Open_cv\photos\sample1.jpg'  # Đường dẫn đến ảnh
+
+# Đọc hình ảnh từ file
 image = cv2.imread(image_path)
-# Kiểm tra kích thước của ảnh gốc
-height, width, channels = image.shape
-# Kiểm tra xem hình ảnh có được đọc thành công không
 if image is None:
-    print("Error: Can not read the image. Pls check your URL.")
+    print("Error: Không thể đọc hình ảnh. Vui lòng kiểm tra đường dẫn.")
 else:
- 
-     print('height = ', height, 'width = ', width, 'channels = ', channels)
+    # Chuyển đổi sang ảnh xám
+    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    
+    # Làm mịn ảnh (có thể sử dụng Gaussian Blur)
+    blurred_image = cv2.GaussianBlur(gray_image, (5, 5), 0)
+    
+    # Ngưỡng hóa ảnh (có thể sử dụng ngưỡng Otsu)
+    _, thresh_image = cv2.threshold(blurred_image, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
 
-     
-w=width//2
-h=height//2
-resized_image = cv2.resize(image, (w,h)) #width ,height  #thu nhỏ cho ảnh rõ hơn
-gray_image = cv2.cvtColor(resized_image, cv2.COLOR_BGR2GRAY) #đổi sang màu xám cho dễ nhận dạng
-cv2.imshow('Image', image) 
-cv2.imshow('resized_image',resized_image)
-cv2.imshow('gray_image',gray_image)
+    # Trích xuất văn bản từ ảnh đã xử lý
+    custom_config = r'--oem 3 --psm 6 -l vie'  # Cấu hình cho Tesseract
+    text = pytesseract.image_to_string(thresh_image, config=custom_config)
 
-text = pytesseract.image_to_string(gray_image, lang='vie')
-print(text)
+    # Hiển thị hình ảnh đã xử lý
+    cv2.imshow('Processed Image', thresh_image)
+    print(text)
 
-cv2.waitKey(0)
-cv2.destroyAllWindows()
+    # Hiển thị hình ảnh gốc
+    cv2.imshow('Original Image', image)
 
-
-
+    # Chờ người dùng nhấn phím và đóng cửa sổ
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()

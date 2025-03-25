@@ -3,7 +3,7 @@ import pytesseract
 
 # Đường dẫn đến tesseract
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
-image_path = r'D:\Test_Lab\Open_cv\photos\sample2.jpg'
+image_path = r'D:\Test_Lab\Open_cv\photos\sample3.jpg'
 
 # Đọc ảnh
 image = cv2.imread(image_path)
