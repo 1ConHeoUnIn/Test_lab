@@ -53,7 +53,7 @@ else:
         (int(width * 0.5), int(height * 0.58), int(width * 0.9), int(height * 0.73)),
 
          (int(width * 0.1), int(height * 0.73), int(width * 0.4), height),
-        (int(width * 0.5), int(height * 0.73), int(width * 0.9), height),
+        (int(width * 0.5), int(height * 0.73), int(width * 0.9), height)
       
 
         # nếu muốn cắt thêm thì chứ thêm tọa độ x1 y1 x2 y2

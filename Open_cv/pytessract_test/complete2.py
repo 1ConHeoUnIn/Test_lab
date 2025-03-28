@@ -13,7 +13,10 @@ if image is None:
 else:
     # Chuyển đổi sang ảnh xám
     image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    
+    threshold_value = 130 # Thay đổi giá trị này để điều chỉnh độ tương phản
+    _, image = cv2.threshold(image, threshold_value, 255, cv2.THRESH_BINARY)
+    image = cv2.equalizeHist(image)
+
     # Kiểm tra kích thước
     height, width = image.shape
     print("width : ", width)
